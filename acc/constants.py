@@ -1,4 +1,3 @@
-__author__ = 'kenji'
 #from nudge.json import ObjDict
 from acc.utils import O
 

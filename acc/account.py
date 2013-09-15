@@ -1,4 +1,3 @@
-__author__ = 'kenji'
 from acc.utils import DateRange
 import datetime
 from money import Money

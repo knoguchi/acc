@@ -1,5 +1,3 @@
-__author__ = 'kenji'
-
 class AccountingException(Exception):
     pass
 

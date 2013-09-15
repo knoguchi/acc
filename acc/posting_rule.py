@@ -1,4 +1,3 @@
-__author__ = 'kenji'
 from acc.entry import Entry
 
 
