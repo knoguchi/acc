@@ -12,8 +12,8 @@ Accounting Patterns
 - Movement is not always single entry. `AccountingTransaction` supports multi-legged entries.
 - The movement is governed by `Agreement`s and `PostingRule`s.
 - There are 3 patterns of adjustment. A general rule is 
-  1. Cancel -- use `ReversalAdjustment` to remove the original transaction.  This is possible when the original transaction (event) has no subsequent events.  It's practical but not GAAP compliant.
-  2. Reverse -- use `ReplacementAdjustment` to add entries with negated amount.  This is the most common case.
+  1. Cancel(Replace) -- use `ReplaceAdjustment` to remove the original transaction, and add a new one as necessary.  This is possible when the original transaction (event) has no subsequent events.  It's practical but not GAAP compliant.
+  2. Reverse -- use `ReversalAdjustment` to add entries with negated amount.  This is the most common case that keeps both of the erratic and correct entries.
   3. Adjust difference -- use `DifferenceAdjustment` when the original transaction is already closed, and you need to create a new entry for the adjustment.
 
 Example
