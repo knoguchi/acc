@@ -1,11 +1,11 @@
 Acc
 ===
 
-A Python implementation of Accounting Pattern framework by Martin Fowler.
+A Python implementation of Accounting Patterns framework by Martin Fowler.
 It may not necessarily represent MF's design.
 
-Accounting Pattern
-==================
+Accounting Patterns
+===================
 
 - Essentially it's a movement of money from an `Account` to another.
 - Movement of quantity can be expressed as `AccountingEvent` and `Entry`
@@ -30,3 +30,27 @@ TODO
  - Remove Java-ism.
  - Remove Money specific code from the framework.
  - Create general purpose accouting mixin that supports any quantifiable.
+
+References
+==========
+* The main article
+  http://martinfowler.com/apsupp/accounting.pdf
+
+* Account
+  http://martinfowler.com/eaaDev/Account.html
+
+* Accounting Entry
+  http://martinfowler.com/eaaDev/AccountingEntry.html
+
+* Service Agreement and Posting Rule
+  http://martinfowler.com/eaaDev/AgreementDispatcher.html
+
+* Reversal Adjustment
+  http://martinfowler.com/eaaDev/ReversalAdjustment.html
+
+* Replacement Adjustment
+  http://martinfowler.com/eaaDev/ReplacementAdjustment.html
+
+* Difference Adjustment
+  http://martinfowler.com/eaaDev/DifferenceAdjustment.html
+
