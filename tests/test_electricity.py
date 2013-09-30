@@ -81,7 +81,7 @@ class TestElectricityUsage(TestCase, ReallyEqualMixin):
 
         revenue.withdraw(Money(500), receivables, date(1999, 1, 4))
         revenue.withdraw(Money(200), deferred, date(1999, 1, 4))
-        print "Rcv", receivables.balance()
+
         self.assertReallyEqual(Money(500), receivables.balance())
         self.assertReallyEqual(Money(200), deferred.balance())
         self.assertReallyEqual(Money(-700), revenue.balance())
@@ -118,8 +118,9 @@ class TestElectricityUsage(TestCase, ReallyEqualMixin):
         self.assertReallyEqual(Money(27.5), self.acm.balance_for(ACCOUNT_TYPE.TAX))
 
         # adjust
-        adjustment1 = ReversalAdjustment(Unit.KWH.amount(70), date(1999, 10, 1),
-                            adjusted_event=usage_event)
+        correct_usage_event = Usage(Unit.KWH.amount(70), date(1999, 10, 1), self.acm)
+        adjustment1 = ReversalAdjustment(correct_usage_event, date(1999, 11, 1),
+                                         adjusted_event=usage_event)
 
         event_list.add(adjustment1)
         event_list.process()

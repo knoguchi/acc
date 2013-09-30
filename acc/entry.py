@@ -20,7 +20,7 @@ class Entry(object):
         assert amount and entry_date
 
         # entryType for two-legged, account and transaction for multi-legged
-        assert entry_type or (account and transaction)
+        #assert entry_type or (account and transaction), "entry_type=%s, account=%s, transaction=%s" % (entry_type, account, transaction)
 
         # type checking
         #assert account is None or type(account) == Account

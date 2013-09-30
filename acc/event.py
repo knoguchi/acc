@@ -104,7 +104,7 @@ class Event(object):
                 ev.reverse()
 
     def reverse_entry(self, entry):
-        reversing_entry = Entry(-entry.amount, entry.entry_date, entry_type=entry.entry_type )
+        reversing_entry = Entry(-entry.amount, entry.entry_date, entry_type=entry.entry_type)
         target_account = self._subject.account_for(entry.entry_type)
         target_account.post(reversing_entry)
 

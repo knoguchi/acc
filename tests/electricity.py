@@ -45,6 +45,7 @@ class Customer:
             self.accounts[account_type] = Account(Currency('USD'), account_type)
 
     def account_for(self, account_type):
+        assert isinstance(self.accounts[account_type], Account), "%s is not Account" % self.accounts[account_type]
         return self.accounts[account_type]
 
     def add_entry(self, arg, entry_type):

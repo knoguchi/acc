@@ -9,8 +9,7 @@ class DifferenceAdjustment(Event):
         super(DifferenceAdjustment, self).__init__(None, occurred_at, subject)
         self.new_events = []
         self.old_events = []
-
-        self.savedAccounts = {}
+        self.saved_accounts = {}
 
     def add_new_event(self, arg):
         self.new_events.append(arg)
@@ -43,26 +42,28 @@ class DifferenceAdjustment(Event):
         self.process_replacements()
         self.commit()
 
-        self.secondary_events = self.old_events
+        self._secondary_events = self.old_events
 
-    def copy_accounts(self, account_from):
+    def copy_accounts(self, accounts_from):
         result = {}
-        for t in account_from:
-            result[t] = account_from.copy()
+        for k, v in accounts_from.items():
+            result[k] = v.copy()
         return result
 
     def snapshot_accounts(self):
-        saved_accounts = self.subject.get_accounts()
-        self.subject.set_accounts(self.copy_accounts(saved_accounts))
+        self.saved_accounts = self.subject.get_accounts()
+        self.subject.set_accounts(self.copy_accounts(self.saved_accounts))
 
     def reverse_old_events(self):
         for event in self.old_events:
             event.reverse()
 
     def process_replacements(self):
+        """
+        page 67
+        """
         for new_event in self.new_events:
-            for i in range(len(new_event)):
-                new_event[i].process()
+            new_event.process()
 
     def commit(self):
         for t in ACCOUNT_TYPE.values():
@@ -71,11 +72,11 @@ class DifferenceAdjustment(Event):
 
     def adjust_account(self, account_type):
         corrected_account = self.subject.account_for(account_type)
-        original_account = self.get_saved_accounts().get(account_type)
-        difference = corrected_account.balance().subtract(original_account.balance())
+        original_account = self.saved_accounts.get(account_type)
+        difference = corrected_account.balance() - original_account.balance()
         result = Entry(difference, datetime.date.today())
-        original_account.addEntry(result)
-        self.resulting_entries.add(result)
+        original_account.add_entry(result)
+        self._resulting_entries.append(result)
 
     def restore_accounts(self):
         self.subject.set_accounts(self.saved_accounts)

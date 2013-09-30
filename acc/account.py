@@ -57,3 +57,8 @@ class Account(object):
 
     def post(self, arg):
         self.entries.append(arg)
+
+    def copy(self):
+        x = Account(self.currency, self.type)
+        x.entries = self.entries
+        return x
