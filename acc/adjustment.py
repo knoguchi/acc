@@ -3,6 +3,7 @@ import datetime
 from acc.event import Event
 from acc.entry import Entry
 from acc.constants import ACCOUNT_TYPE
+from acc.utils import copy_accounts
 
 
 class DifferenceAdjustment(Event):
@@ -48,16 +49,9 @@ class DifferenceAdjustment(Event):
 
         self._secondary_events = self.old_events
 
-    @classmethod
-    def copy_accounts(cls, accounts_from):
-        result = {}
-        for k, v in accounts_from.items():
-            result[k] = v.copy()
-        return result
-
     def snapshot_accounts(self):
         self.saved_accounts = self.subject.get_accounts()
-        self.subject.set_accounts(self.copy_accounts(self.saved_accounts))
+        self.subject.set_accounts(copy_accounts(self.saved_accounts))
 
     def commit(self):
         for t in ACCOUNT_TYPE.values():

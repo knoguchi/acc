@@ -1,6 +1,13 @@
 import datetime
 
 
+def copy_accounts(accounts_from):
+    result = {}
+    for k, v in accounts_from.items():
+        result[k] = v.copy()
+    return result
+
+
 class O:
     @classmethod
     def values(cls):

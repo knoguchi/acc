@@ -8,7 +8,7 @@ from acc.event import Event
 from acc.entry import Entry
 from acc.agreement import Agreement
 from acc.posting_rule import PostingRule
-
+from acc.utils import copy_accounts
 set_default_currency('USD')
 
 
@@ -81,17 +81,10 @@ class Customer:
         assert not self.is_adjusting()
         # must be deep copy
         self.saved_real_accounts = self.accounts
-        self.accounts = self.copy_accounts(self.saved_real_accounts)
+        self.accounts = copy_accounts(self.saved_real_accounts)
 
     def is_adjusting(self):
         return self.saved_real_accounts is not None
-
-    @classmethod
-    def copy_accounts(cls, account_from):
-        result = {}
-        for t in account_from:
-            result[t] = account_from.copy()
-        return result
 
     def commit_adjustment(self, adjustment):
         assert self.is_adjusting()
