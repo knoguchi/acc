@@ -1,5 +1,5 @@
 import logging
-from money import Money
+from money.Money import Money
 from acc.exception import ImmutableTransactionException, UnableToPostException
 from acc.entry import Entry
 

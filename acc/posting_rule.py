@@ -20,5 +20,5 @@ class PostingRule(object):
         self.make_entry(event, self.calculate_amount(event))
         #raise NotImplemented("process() not implemented")
 
-    #def calculate_amount(self, evt):
-    #    raise NotImplemented
+    def calculate_amount(self, evt):
+        raise NotImplemented

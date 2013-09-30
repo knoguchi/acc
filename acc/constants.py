@@ -1,4 +1,3 @@
-#from nudge.json import ObjDict
 from acc.utils import O
 
 
@@ -10,6 +9,7 @@ class ACCOUNT_TYPE(O):
     REVENUE="Revenue"
     RECEIVABLES="Receivables"
     DEFERRED="Deferred"
+
 
 class EVENT_TYPE(O):
     TAX='tax'

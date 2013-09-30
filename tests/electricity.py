@@ -1,12 +1,13 @@
 import datetime
 
+from money.Money import Money, Currency, set_default_currency
+
 from acc.constants import ACCOUNT_TYPE, EVENT_TYPE
 from acc.account import Account
 from acc.event import Event
 from acc.entry import Entry
 from acc.agreement import Agreement
 from acc.posting_rule import PostingRule
-from money import Money, Currency, set_default_currency
 
 set_default_currency('USD')
 
@@ -36,6 +37,7 @@ class Customer:
 
     def get_accounts(self):
         return self.accounts
+
     def set_accounts(self, accounts):
         self.accounts = accounts
 
@@ -84,7 +86,8 @@ class Customer:
     def is_adjusting(self):
         return self.saved_real_accounts is not None
 
-    def copy_accounts(self, account_from):
+    @classmethod
+    def copy_accounts(cls, account_from):
         result = {}
         for t in account_from:
             result[t] = account_from.copy()
@@ -121,14 +124,14 @@ class MonetaryEvent(Event):
 
 
 class TaxEvent(MonetaryEvent):
-    def __init__(self, base_event, taxableAmount):
-        super(TaxEvent, self).__init__(taxableAmount,
+    def __init__(self, base_event, taxable_amount):
+        super(TaxEvent, self).__init__(taxable_amount,
                                        EVENT_TYPE.TAX,
                                        base_event.occurred_at,
                                        base_event.subject)
         self.base_event = base_event
         base_event.friend_add_secondary_event(self)
-        assert base_event.event_type != self.event_type,\
+        assert base_event.event_type != self.event_type, \
             "Probable endless recursion"
 
 
@@ -176,6 +179,7 @@ class AmountFormulaPR(PostingRule):
         if self.is_taxable():
             TaxEvent(event, self.calculate_amount(event)).process()
 
+
 class MultiplyByRatePR(PostingRule):
     def __init__(self, entry_type):
         super(MultiplyByRatePR, self).__init__(entry_type)
@@ -183,7 +187,8 @@ class MultiplyByRatePR(PostingRule):
     def is_taxable(self):
         return not (self.entry_type == ACCOUNT_TYPE.TAX)
 
-    def calculate_amount(self, usage_event):
+    @classmethod
+    def calculate_amount(cls, usage_event):
         return Money(
             usage_event.get_amount().get_amount() * usage_event.get_rate(), 'USD')
 

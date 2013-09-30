@@ -5,6 +5,7 @@ from acc.transaction import Transaction
 from acc.adjustment import DifferenceAdjustment, ReversalAdjustment
 
 from tests.electricity import *
+from money.Money import Money
 
 
 class ReallyEqualMixin(object):
@@ -86,7 +87,7 @@ class TestElectricityUsage(TestCase, ReallyEqualMixin):
         self.assertReallyEqual(Money(200), deferred.balance())
         self.assertReallyEqual(Money(-700), revenue.balance())
 
-    def test_balanceUsingMultiLeggedTransaction(self):
+    def test_balance_using_multi_legged_transaction(self):
         revenue = self.acm.account_for(ACCOUNT_TYPE.REVENUE)
         deferred = self.acm.account_for(ACCOUNT_TYPE.RECEIVABLES)
         receivables = self.acm.account_for(ACCOUNT_TYPE.DEFERRED)

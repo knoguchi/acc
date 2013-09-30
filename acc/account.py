@@ -1,7 +1,8 @@
 from acc.utils import DateRange
 import datetime
-from money import Money
+from money.Money import Money
 from acc.transaction import Transaction
+
 
 class Account(object):
     """

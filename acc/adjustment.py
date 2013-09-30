@@ -1,7 +1,8 @@
+import datetime
+
 from acc.event import Event
 from acc.entry import Entry
 from acc.constants import ACCOUNT_TYPE
-import datetime
 
 
 class DifferenceAdjustment(Event):
@@ -24,12 +25,15 @@ class DifferenceAdjustment(Event):
         arg.set_replacement_event(self)
 
     def reverse_old_events(self):
-        for e in self.old_events:
-            e.reverse()
+        for old_event in self.old_events:
+            old_event.reverse()
 
     def process_replacements(self):
-        for e in self.new_events:
-            e.process()
+        """
+        page 67
+        """
+        for new_event in self.new_events:
+            new_event.process()
 
     def process(self):
         assert not self.is_processed, "Cannot process an event twice"
@@ -44,7 +48,8 @@ class DifferenceAdjustment(Event):
 
         self._secondary_events = self.old_events
 
-    def copy_accounts(self, accounts_from):
+    @classmethod
+    def copy_accounts(cls, accounts_from):
         result = {}
         for k, v in accounts_from.items():
             result[k] = v.copy()
@@ -53,17 +58,6 @@ class DifferenceAdjustment(Event):
     def snapshot_accounts(self):
         self.saved_accounts = self.subject.get_accounts()
         self.subject.set_accounts(self.copy_accounts(self.saved_accounts))
-
-    def reverse_old_events(self):
-        for event in self.old_events:
-            event.reverse()
-
-    def process_replacements(self):
-        """
-        page 67
-        """
-        for new_event in self.new_events:
-            new_event.process()
 
     def commit(self):
         for t in ACCOUNT_TYPE.values():
@@ -95,7 +89,6 @@ class ReversalAdjustment(Event):
 
 
 class ReplacementAdjustment(Event):
-
     def process(self):
         """
         override Event.process()
