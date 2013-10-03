@@ -5,9 +5,9 @@ class Agreement(object):
     def __init__(self):
         self.posting_rules = {}
 
-    def add_posting_rule(self, event_type, posting_rule, date):
+    def add_posting_rule(self, event_type, posting_rule, effective_date):
         self.posting_rules.setdefault(event_type, TemporalCollection())
-        self.temporal_collection(event_type).put(date, posting_rule)
+        self.temporal_collection(event_type).put(effective_date, posting_rule)
 
     def get_posting_rule(self, event_type, when):
         return self.temporal_collection(event_type).get(when)

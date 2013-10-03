@@ -70,18 +70,6 @@ class DifferenceAdjustment(Event):
         self.subject.set_accounts(self.saved_accounts)
 
 
-class ReversalAdjustment(Event):
-    def process(self):
-        """
-        override Event.process()
-        """
-        assert not self._is_processed, "Cannot process an event twice"
-        if self.adjusted_event:
-            self.adjusted_event.reverse()
-        self._subject.process(self)
-        self.mark_processed()
-
-
 class ReplacementAdjustment(Event):
     def process(self):
         """

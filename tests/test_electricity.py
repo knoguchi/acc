@@ -1,11 +1,12 @@
 from unittest import TestCase
 from datetime import date
+
+from money.Money import Money
+
 from acc.event import EventList
 from acc.transaction import Transaction
-from acc.adjustment import DifferenceAdjustment, ReversalAdjustment
-
+from acc.adjustment import DifferenceAdjustment
 from tests.electricity import *
-from money.Money import Money
 
 
 class ReallyEqualMixin(object):
@@ -119,9 +120,10 @@ class TestElectricityUsage(TestCase, ReallyEqualMixin):
         self.assertReallyEqual(Money(27.5), self.acm.balance_for(ACCOUNT_TYPE.TAX))
 
         # adjust
-        correct_usage_event = Usage(Unit.KWH.amount(70), date(1999, 10, 1), self.acm)
-        adjustment1 = ReversalAdjustment(correct_usage_event, date(1999, 11, 1),
-                                         adjusted_event=usage_event)
+        adjustment1 = Usage(Unit.KWH.amount(70), date(1999, 10, 1),
+                            adjusted_event=usage_event)
+        #adjustment1 = ReversalAdjustment(usage_event.event_type, date(1999, 11, 1),
+        #                                 adjusted_event=usage_event)
 
         event_list.add(adjustment1)
         event_list.process()

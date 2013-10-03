@@ -19,7 +19,7 @@ class Event(object):
         self._resulting_entries = []  # hash map?
         self._secondary_events = []
 
-        # for reversal adjustment
+        # for reversal adjustment.  See page 56
         self.adjusted_event = None
         self.replacement_event = None
         if adjusted_event:
