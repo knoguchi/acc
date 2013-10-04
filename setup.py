@@ -24,4 +24,5 @@ setup(name='acc',
       entry_points="""
       # -*- Entry points: -*-
       """,
+      setup_requires=['nose>=1.0']
       )
