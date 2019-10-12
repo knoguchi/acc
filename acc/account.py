@@ -1,13 +1,16 @@
-from acc.utils import DateRange
 import datetime
-from money.Money import Money
+
+from money.money import Money
+
 from acc.transaction import Transaction
+from acc.utils import DateRange
 
 
 class Account(object):
     """
     TODO: Account should use Quantity abstract class, not Money
     """
+
     def __init__(self, currency, account_type):
         self.entries = []
         self.currency = currency
@@ -48,7 +51,7 @@ class Account(object):
 
     def withdraw(self, amount, target, date):
         # two-legged AT
-        #AccountingTransaction(amount, self, target, date)
+        # AccountingTransaction(amount, self, target, date)
 
         # multi-legged AT
         trans = Transaction(date)

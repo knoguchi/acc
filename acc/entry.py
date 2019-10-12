@@ -1,4 +1,4 @@
-#from acc.account import Account, AccountingTransaction
+# from acc.account import Account, AccountingTransaction
 
 
 class Entry(object):
@@ -14,18 +14,17 @@ class Entry(object):
                  account=None,
                  entry_type=None,
                  transaction=None):
-        #print type(account), type(entryType), type(transaction)
 
         # amount and date must be set
-        assert amount and entry_date
+        assert amount is not None and entry_date
 
         # entryType for two-legged, account and transaction for multi-legged
         # assert entry_type or (account and transaction), "entry_type=%s, account=%s, transaction=%s" % (entry_type, account, transaction)
 
         # type checking
-        #assert account is None or type(account) == Account
-        #assert entryType is None or type(entryType) == AccountType
-        #assert transaction is None or type(transaction) == AccountingTransaction
+        # assert account is None or type(account) == Account
+        # assert entry_type is None or type(entry_type) == AccountType
+        # assert transaction is None or type(transaction) == AccountingTransaction
 
         self.amount = amount
         self.entry_date = entry_date

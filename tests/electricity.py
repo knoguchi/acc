@@ -1,15 +1,14 @@
 import datetime
 
-from money.Money import Money, Currency, set_default_currency
+from money.money import Money, Currency
 
-from acc.constants import ACCOUNT_TYPE, EVENT_TYPE
 from acc.account import Account
-from acc.event import Event
-from acc.entry import Entry
 from acc.agreement import Agreement
+from acc.constants import ACCOUNT_TYPE, EVENT_TYPE
+from acc.entry import Entry
+from acc.event import Event
 from acc.posting_rule import PostingRule
 from acc.utils import copy_accounts
-set_default_currency('USD')
 
 
 class ServiceAgreement(Agreement):
@@ -44,7 +43,7 @@ class Customer:
     def setup_accounts(self):
         self.accounts = {}
         for account_type in ACCOUNT_TYPE.values():
-            self.accounts[account_type] = Account(Currency('USD'), account_type)
+            self.accounts[account_type] = Account(Currency.USD, account_type)
 
     def account_for(self, account_type):
         assert isinstance(self.accounts[account_type], Account), "%s is not Account" % self.accounts[account_type]
@@ -183,7 +182,7 @@ class MultiplyByRatePR(PostingRule):
     @classmethod
     def calculate_amount(cls, usage_event):
         return Money(
-            usage_event.get_amount().get_amount() * usage_event.get_rate(), 'USD')
+            usage_event.get_amount().get_amount() * usage_event.get_rate(), Currency.USD)
 
     def process(self, event):
         super(MultiplyByRatePR, self).process(event)
