@@ -1,8 +1,8 @@
 import datetime
 
-from acc.event import Event
-from acc.entry import Entry
 from acc.constants import ACCOUNT_TYPE
+from acc.entry import Entry
+from acc.event import Event
 from acc.utils import copy_accounts
 
 
@@ -80,4 +80,3 @@ class ReplacementAdjustment(Event):
             self.adjusted_event.undo()
         self._subject.process(self)
         self.mark_processed()
-

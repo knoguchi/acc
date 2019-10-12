@@ -90,7 +90,7 @@ class TemporalCollection:
         for milestone in self.milestones():
             if milestone <= when:
                 return self.contents.get(milestone)
-            #IllegalArgumentException
+            # IllegalArgumentException
         raise ValueError("no records that early")
 
     def put(self, at, item):
@@ -114,6 +114,7 @@ class TemporalCollection:
 
     def clear_milestone_cache(self):
         self._milestone_cache = None
+
 
 class AttrDict(dict):
     def __init__(self, *args, **kwargs):

@@ -1,16 +1,18 @@
-from acc.entry import Entry
 import datetime
 import logging
 
+from acc.entry import Entry
+
 log = logging.getLogger()
+
 
 class Event(object):
     def __init__(self, event_type, occurred_at,
                  subject=None, adjusted_event=None):
         assert subject or adjusted_event
-        #assert subject is None or issubclass(subject.__class__, Subject)
+        # assert subject is None or issubclass(subject.__class__, Subject)
         assert adjusted_event is None or issubclass(adjusted_event.__class__,
-                                                   Event)
+                                                    Event)
 
         self._event_type = event_type
         self._occurred_at = occurred_at
@@ -24,7 +26,7 @@ class Event(object):
         self.replacement_event = None
         if adjusted_event:
             if self.adjusted_event and self.adjusted_event.has_been_adjusted():
-                #IllegalArgumentException
+                # IllegalArgumentException
                 raise ValueError(
                     "The " + adjusted_event + "is already adjusted")
             self.adjusted_event = adjusted_event
@@ -149,7 +151,6 @@ class Event(object):
         """
         for event in self._secondary_events:
             event.undo()
-
 
 
 class EventList(object):

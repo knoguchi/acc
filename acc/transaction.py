@@ -1,7 +1,9 @@
 import logging
-from money.Money import Money
-from acc.exception import ImmutableTransactionException, UnableToPostException
+
+from money.money import Money
+
 from acc.entry import Entry
+from acc.exception import ImmutableTransactionException, UnableToPostException
 
 log = logging.getLogger(__name__)
 
@@ -34,13 +36,13 @@ class Transaction(object):
         self.was_posted = True
 
     def can_post(self):
-        return self.balance() == 0
+        return self.balance() == Money(0)
 
     def balance(self):
         if len(self.entries) == 0:
             # XXX: this should be currency neutral 0. or should this class
             # keep Currency?
-            return Money(0, 'USD')
+            return Money(0)
         result = None
         for entry in self.entries:
             if result is None:
